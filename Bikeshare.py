@@ -40,8 +40,8 @@ X_test = ss_X.transform(X_test)
 
 #对y做标准化--可以比较不做标准化的差异
 
-#y_train = ss_y.fit_transform(y_train.values.reshape(-1, 1))
-#y_test = ss_y.transform(y_test.values.reshape(-1, 1))
+y_train = ss_y.fit_transform(y_train.values.reshape(-1, 1))
+y_test = ss_y.transform(y_test.values.reshape(-1, 1))
 
 # 线性回归
 from sklearn.linear_model import LinearRegression
