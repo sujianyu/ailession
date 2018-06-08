@@ -148,6 +148,7 @@ plt.xlabel('log(alpha)')
 plt.ylabel('mse')
 plt.show()
 
+
 print ('alpha is:', lasso.alpha_)
 
 # 看看各特征的权重系数，系数的绝对值大小可视为该特征的重要性
