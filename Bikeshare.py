@@ -83,3 +83,54 @@ plt.tight_layout()
 #岭回归／L2正则
 from sklearn.linear_model import  RidgeCV
 
+#设置超参数（正则参数）范围
+alphas = [ 0.01, 0.1, 1, 10,100]
+
+#生成一个RidgeCV实例
+ridge = RidgeCV(alphas=alphas, store_cv_values=True)
+
+#模型训练
+ridge.fit(X_train, y_train)
+
+#预测
+y_test_pred_ridge = ridge.predict(X_test)
+y_train_pred_ridge = ridge.predict(X_train)
+
+
+# 评估，使用r2_score评价模型在测试集和训练集上的性能
+print ('The r2 score of RidgeCV on test is', r2_score(y_test, y_test_pred_ridge))
+print ('The r2 score of RidgeCV on train is', r2_score(y_train, y_train_pred_ridge))
+
+mses = np.mean(lasso.mse_path_, axis = 1)
+plt.plot(np.log10(lasso.alphas_), mses)
+#plt.plot(np.log10(lasso.alphas_)*np.ones(3), [0.3, 0.4, 1.0])
+plt.xlabel('log(alpha)')
+plt.ylabel('mse')
+plt.show()
+
+# Lasso／L1正则
+from sklearn.linear_model import LassoCV
+
+#设置超参数搜索范围
+#alphas = [ 0.01, 0.1, 1, 10,100]
+
+#生成一个LassoCV实例
+#lasso = LassoCV(alphas=alphas)
+lasso = LassoCV()
+
+#训练（内含CV）
+lasso.fit(X_train, y_train)
+
+#测试
+y_test_pred_lasso = lasso.predict(X_test)
+y_train_pred_lasso = lasso.predict(X_train)
+
+
+# 评估，使用r2_score评价模型在测试集和训练集上的性能
+print ('The r2 score of LassoCV on test is', r2_score(y_test, y_test_pred_lasso))
+print ('The r2 score of LassoCV on train is', r2_score(y_train, y_train_pred_lasso))
+print (('alpha is:', lasso.alpha_))
+
+# 看看各特征的权重系数，系数的绝对值大小可视为该特征的重要性
+fs = pd.DataFrame({"columns":list(columns), "coef_lr":list((lr.coef_.T)), "coef_ridge":list((ridge.coef_.T)), "coef_lasso":list((lasso.coef_.T))})
+fs.sort_values(by=['coef_lr'],ascending=False)
