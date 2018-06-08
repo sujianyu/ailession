@@ -23,6 +23,8 @@ print(daydata.head())
 #将数据分为2011年和2012年两组数据
 _2011data = daydata.loc[daydata.yr == 0]
 _2012data = daydata.loc[daydata.yr == 1]
+#首先要去掉y值列，在这里就是cnt,casual,registered，dteday特征项是按时间增加的特性，但本身是字符型数据应该转换成数字型才
+# 可用于预测，因为是线性增加，我这里采取用instant列代替。
 X_train = _2011data.drop(['cnt', 'dteday', 'yr', 'casual', 'registered'], axis=1)
 y_train = _2011data["cnt"]
 
@@ -79,6 +81,7 @@ plt.axis('tight')
 plt.xlabel('True price')
 plt.ylabel('Predicted price')
 plt.tight_layout()
+plt.show()
 
 #岭回归／L2正则
 from sklearn.linear_model import  RidgeCV
