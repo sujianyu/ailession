@@ -7,13 +7,12 @@ from sklearn.metrics import r2_score  #评价回归预测模型的性能
 #解决中文显示问题
 import sys
 reload(sys)
-sys.setdefaultencoding('utf8')
+#sys.setdefaultencoding('utf8')
 from pylab import *
 mpl.rcParams['font.sans-serif'] = ['Microsoft YaHei']#指定默认字体
 mpl.rcParams['axes.unicode_minus'] =False # 解决保存图像是负号'-'显示为方块的问题
 #读取数据
-dbpath = "f:\\aidata"
-daydata = pd.read_csv(dbpath + "\day.csv")
+daydata = pd.read_csv("day.csv")
 print(daydata.head())
 #根据在exploreBikeshare.py程序中数据探索后，符合正态分布，适用于线性回归
 
@@ -30,8 +29,6 @@ y_train = _2011data["cnt"]
 
 X_test = _2012data.drop(['cnt', 'dteday', 'yr', 'casual', 'registered'], axis=1)
 y_test = _2012data["cnt"]
-print(X_train.shape)
-print(y_train.shape)
 columns = X_test.columns
 # 数据标准化
 from sklearn.preprocessing import StandardScaler
@@ -43,8 +40,8 @@ X_test = ss_X.transform(X_test)
 
 #对y做标准化--可以比较不做标准化的差异
 
-y_train = ss_y.fit_transform(y_train.values.reshape(-1, 1))
-y_test = ss_y.transform(y_test.values.reshape(-1, 1))
+#y_train = ss_y.fit_transform(y_train.values.reshape(-1, 1))
+#y_test = ss_y.transform(y_test.values.reshape(-1, 1))
 
 # 线性回归
 from sklearn.linear_model import LinearRegression
@@ -57,6 +54,7 @@ lr.fit(X_train, y_train)
 # 预测
 y_test_pred_lr = lr.predict(X_test)
 y_train_pred_lr = lr.predict(X_train)
+print("LineearRegression predicted values:", y_test_pred_lr)
 
 # 看看各特征的权重系数，系数的绝对值大小可视为该特征的重要性
 fs = pd.DataFrame({"columns": list(columns), "coef": list((lr.coef_.T))})
@@ -152,12 +150,4 @@ print ('alpha is:', lasso.alpha_)
 fs = pd.DataFrame({"columns": list(columns), "coef_lr": list((lr.coef_.T)), "coef_ridge": list((ridge.coef_.T)),
                    "coef_lasso": list((lasso.coef_.T))})
 fs.sort_values(by=['coef_lr'], ascending=False)
-
-mses = np.mean(lasso.mse_path_, axis=1)
-plt.plot(np.log10(lasso.alphas_), mses)
-plt.xlabel('log(alpha)')
-plt.ylabel('mse')
-plt.show()
-
-print ('alpha is:', lasso.alpha_)
-
+print(fs)
