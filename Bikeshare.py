@@ -23,8 +23,8 @@ print(daydata.head())
 _2011data = daydata.loc[daydata.yr == 0]
 _2012data = daydata.loc[daydata.yr == 1]
 #首先要去掉y值列，在这里就是cnt,casual,registered，dteday特征项是按时间增加的特性，但本身是字符型数据应该转换成数字型才
-# 可用于预测，因为是线性增加，我这里采取用instant列代替。
-X_train = _2011data.drop(['cnt', 'dteday', 'yr', 'casual', 'registered','atemp','seanon'], axis=1)
+# 可用于预测，因为是线性增加，我这里采取用instant列代替。根据程序exploreBikeshare.py中特征相关性可以去掉atemp,season
+X_train = _2011data.drop(['cnt', 'dteday', 'yr', 'casual', 'registered','atemp','season'], axis=1)
 y_train = _2011data["cnt"]
 
 X_test = _2012data.drop(['cnt', 'dteday', 'yr', 'casual', 'registered','atemp','season'], axis=1)
