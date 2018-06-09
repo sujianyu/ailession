@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score  #评价回归预测模型的性能
 #解决中文显示问题
 import sys
 reload(sys)
-#sys.setdefaultencoding('utf8')
+sys.setdefaultencoding('utf8')
 from pylab import *
 mpl.rcParams['font.sans-serif'] = ['Microsoft YaHei']#指定默认字体
 mpl.rcParams['axes.unicode_minus'] =False # 解决保存图像是负号'-'显示为方块的问题
