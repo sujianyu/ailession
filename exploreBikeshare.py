@@ -11,8 +11,7 @@ from pylab import *
 mpl.rcParams['font.sans-serif'] = ['Microsoft YaHei']#指定默认字体
 mpl.rcParams['axes.unicode_minus'] =False # 解决保存图像是负号'-'显示为方块的问题
 
-dbpath = "f:\\aidata"
-daydata = pd.read_csv(dbpath + "\day.csv")
+daydata = pd.read_csv("day.csv")
 #读入day.csv文件的数据
 print(daydata.describe())
 #将数据分为2011年和2012年两组数据
